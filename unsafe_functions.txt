@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char* str = "Hello, world!";
+    char buffer[5];
+    strcpy(buffer, str); // Unsafe: buffer overflow occurs because str is longer than buffer
+    printf("%s\n", buffer);
+    return 0;
+}
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char buffer[10] = "Hello";
+    strcat(buffer, " world, how are you?"); // Unsafe: buffer overflow occurs because the concatenated string is longer than buffer
+    printf("%s\n", buffer);
+    return 0;
+}
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char buffer[5];
+    sprintf(buffer, "%d", 123456); // Unsafe: buffer overflow occurs because the formatted string is longer than buffer
+    printf("%s\n", buffer);
+    return 0;
+}
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char buffer[10];
+    gets(buffer); // Unsafe: buffer overflow occurs if the input string is longer than buffer
+    printf("%s\n", buffer);
+    return 0;
+}
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char buffer[10];
+    scanf("%s", buffer); // Unsafe: buffer overflow occurs if the input string is longer than buffer
+    printf("%s\n", buffer);
+    return 0;
+}
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char source[] = "Hello, world!";
+    char destination[5];
+    memcpy(destination, source, sizeof(source)); // Unsafe: buffer overflow occurs because source is longer than destination
+    printf("%s\n", destination);
+    return 0;
+}
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char buffer[10];
+    memset(buffer, 0, 20); // Unsafe: buffer overflow occurs because the size parameter is larger than the buffer size
+    printf("%s\n", buffer);
+    return 0;
+}

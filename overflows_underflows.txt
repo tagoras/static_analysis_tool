@@ -1,0 +1,53 @@
+signed short i = -1;
+while (++i <= sizeof(src)) {
+     buffer[i] = src[i];
+}
+
+unsigned short i = 0;
+do {
+    buffer[i] = src[i];
+} while (i-- >= 0);
+
+int i = SHRT_MIN;
+while (i < sizeof(src)) {
+     buffer[i] = src[i];
+     i++;
+}
+
+char i = 0;
+for (; i >= 0 && i < sizeof(src); i++) {
+     buffer[i] = src[i];
+}
+
+signed short i = -32768;
+while (++i < sizeof(src)) {
+     buffer[i] = src[i];
+}
+
+signed short i = 32767;
+while (i >= 0) {
+     buffer[i] = src[i];
+     i--;
+}
+
+int i = 0;
+while (i < sizeof(src)) {
+     buffer[i] = src[i];
+     i--;
+}
+
+signed short i = 0;
+for (; i < sizeof(src) || i >= 0; i--) {
+     buffer[i] = src[i];
+}
+
+signed short i = SHRT_MAX;
+do {
+     buffer[i] = src[i];
+} while (--i >= 0);
+
+signed short i = -32768;
+do {
+     buffer[i] = src[i];
+     i++;
+} while (i != -32768);

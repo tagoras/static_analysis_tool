@@ -1,0 +1,29 @@
+char buffer1[16];
+char src1[] = "This is a long string that will overflow the buffer.";
+for (int i = 0; i < sizeof(src1); i++) {
+    buffer1[i] = src1[i];
+}
+
+int array1[32];
+int src2[64];
+for (int j = 0; j < sizeof(src2); j++) {
+    array1[j] = src2[j];
+}
+
+float floatBuffer[64];
+float src3[128];
+for (int k = 0; k < sizeof(src3); k++) {
+    floatBuffer[k] = src3[k];
+}
+
+double doubleArray[8];
+double src4[16];
+for (int l = 0; l < sizeof(src4); l++) {
+    doubleArray[l] = src4[l];
+}
+
+short smallNumbers[20];
+short src5[40];
+for (int m = 0; m < sizeof(src5); m++) {
+    smallNumbers[m] = src5[m];
+}

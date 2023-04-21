@@ -1,0 +1,225 @@
+--- The following are dangerous code structures due to the unchecked index variable ---
+
+char buffer1[16];
+char src1[] = "This is a long string that will overflow the buffer.";
+for (int i = 0; i < sizeof(src1); i++) {
+    buffer1[i] = src1[i];
+}
+
+int array1[32];
+int src2[64];
+for (int j = 0; j < sizeof(src2); j++) {
+    array1[j] = src2[j];
+}
+
+float floatBuffer[64];
+float src3[128];
+for (int k = 0; k < sizeof(src3); k++) {
+    floatBuffer[k] = src3[k];
+}
+
+double doubleArray[8];
+double src4[16];
+for (int l = 0; l < sizeof(src4); l++) {
+    doubleArray[l] = src4[l];
+}
+
+short smallNumbers[20];
+short src5[40];
+for (int m = 0; m < sizeof(src5); m++) {
+    smallNumbers[m] = src5[m];
+}
+
+
+#############################################################################
+--- dangerous code segments due to the usage of signed datatypes to access buffers ---
+
+signed short i = -1;
+while (++i <= sizeof(src)) {
+     buffer[i] = src[i];
+}
+
+unsigned short i = 0;
+do {
+    buffer[i] = src[i];
+} while (i-- >= 0);
+
+int i = SHRT_MIN;
+while (i < sizeof(src)) {
+     buffer[i] = src[i];
+     i++;
+}
+
+char i = 0;
+for (; i >= 0 && i < sizeof(src); i++) {
+     buffer[i] = src[i];
+}
+
+signed short i = -32768;
+while (++i < sizeof(src)) {
+     buffer[i] = src[i];
+}
+
+signed short i = 32767;
+while (i >= 0) {
+     buffer[i] = src[i];
+     i--;
+}
+
+int i = 0;
+while (i < sizeof(src)) {
+     buffer[i] = src[i];
+     i--;
+}
+
+signed short i = 0;
+for (; i < sizeof(src) || i >= 0; i--) {
+     buffer[i] = src[i];
+}
+
+signed short i = SHRT_MAX;
+do {
+     buffer[i] = src[i];
+} while (--i >= 0);
+
+signed short i = -32768;
+do {
+     buffer[i] = src[i];
+     i++;
+} while (i != -32768);
+
+#############################################################
+--- Dangerous code segments due to the missing null termination ---
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char src[11] = "HelloWorld";
+    char dest[11];
+    memcpy(dest, src, sizeof(src));
+    printf("%s\n", dest);
+    return 0;
+}
+
+#include <stdio.h>
+
+int main() {
+    char buffer[10];
+    FILE *file = fopen("input.txt", "r");
+    if (file) {
+        fread(buffer, 1, 10, file);
+        fclose(file);
+    }
+    printf("%s\n", buffer);
+    return 0;
+}
+
+#include <stdio.h>
+#include <string.h>
+
+void bad_function(char *str) {
+    char buffer[10];
+    strncpy(buffer, str, sizeof(buffer));
+    printf("%s\n", buffer);
+}
+
+int main() {
+    char input[] = "This is too long!";
+    bad_function(input);
+    return 0;
+}
+
+#include <stdio.h>
+
+void bad_function(char *str) {
+    char buffer[10];
+    int i;
+    for (i = 0; i < 10; i++) {
+        buffer[i] = str[i];
+    }
+    printf("%s\n", buffer);
+}
+
+int main() {
+    char input[] = "HelloWorld";
+    bad_function(input);
+    return 0;
+}
+
+#include <stdio.h>
+
+void bad_function(char *str) {
+    char buffer[10];
+    snprintf(buffer, 11, "%s", str);
+    printf("%s\n", buffer);
+}
+
+int main() {
+    char input[] = "HelloWorld";
+    bad_function(input);
+    return 0;
+}
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char src[] = "HelloWorld";
+    char dest[10];
+    strncpy(dest, src, sizeof(dest) - 1);
+    printf("%s\n", dest);
+    return 0;
+}
+
+#include <stdio.h>
+
+void bad_function(char *str) {
+    char buffer[10];
+    for (int i = 0; i < 10; i++) {
+        buffer[i] = str[i];
+    }
+    printf("%s\n", buffer);
+}
+
+int main() {
+    char input[] = "HelloWorld";
+    bad_function(input);
+    return 0;
+}
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char src[] = "HelloWorld";
+    char dest[10];
+    strncpy(dest, src, 10);
+    printf("%s\n", dest);
+    return 0;
+}
+
+#include <stdio.h>
+
+void bad_function(char *str) {
+    char buffer[10];
+    sprintf(buffer, "%.10s", str);
+    printf("%s\n", buffer);
+}
+
+int main() {
+    char input[] = "ThisIsTooLong!";
+    bad_function(input);
+    return 0;
+}
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char src[] = "HelloWorld";
+    char dest[10];
+    strncat(dest, src, sizeof(dest) - 1);
+    printf("%s\n", dest);
+    return 0;
+}

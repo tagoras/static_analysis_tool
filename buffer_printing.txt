@@ -1,0 +1,59 @@
+#include <stdio.h>
+
+int main() {
+    char str[] = "Hello, World!";
+    printf("%s\n", str);
+    return 0;
+}
+
+#include <stdio.h>
+
+int main() {
+    char str[] = "Hello, World!";
+    puts(str);
+    return 0;
+}
+
+#include <stdio.h>
+
+int main() {
+    char str[] = "Hello, World!";
+    FILE *file = fopen("output.txt", "w");
+    if (file) {
+        fputs(str, file);
+        fclose(file);
+    }
+    return 0;
+}
+
+#include <stdio.h>
+
+int main() {
+    char str[] = "Hello, World!";
+    FILE *file = fopen("output.txt", "w");
+    if (file) {
+        fprintf(file, "%s\n", str);
+        fclose(file);
+    }
+    return 0;
+}
+
+#include <stdio.h>
+
+int main() {
+    char str[] = "World";
+    char buffer[64];
+    sprintf(buffer, "Hello, %s!", str);
+    printf("%s\n", buffer);
+    return 0;
+}
+
+#include <stdio.h>
+
+int main() {
+    char str[] = "World";
+    char buffer[64];
+    snprintf(buffer, sizeof(buffer), "Hello, %s!", str);
+    printf("%s\n", buffer);
+    return 0;
+}
